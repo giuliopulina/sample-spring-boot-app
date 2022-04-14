@@ -75,6 +75,7 @@
 					<releaseProfiles>releases</releaseProfiles>
 				</configuration>
 			  </plugin>
+		</plugins>
 	</build>
 	
 	<profiles>
