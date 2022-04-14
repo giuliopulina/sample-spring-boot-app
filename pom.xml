@@ -13,9 +13,27 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sample</name>
 	<description>Demo project for Spring Boot</description>
+	
 	<properties>
-		<java.version>1.8</java.version>
+		<nexus.url>${env.NEXUS_URL}</nexus.url>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.scm.id>github.com</project.scm.id>
 	</properties>
+	
+	<scm>
+		<connection>scm:git:ssh://git@github.com:giuliopulina/sample-spring-boot-app.git</connection>
+		<developerConnection>scm:git:git@github.com:giuliopulina/sample-spring-boot-app.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	
+	<distributionManagement>
+		<repository>
+			<id>nexus-releases</id>
+			<url>${nexus.url}/nexus/content/repositories/sample-releases/</url>
+		</repository>
+	</distributionManagement>
+		
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -30,7 +48,7 @@
 		<dependency>
 			<groupId>com.sample</groupId>
 			<artifactId>sample-java-library</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.4</version>
 		</dependency>
 
 		<dependency>
@@ -47,6 +65,55 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+
+		  <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-release-plugin</artifactId>
+			<version>3.0.0-M5</version>
+			<configuration>
+			    <tagNameFormat>v@{project.version}</tagNameFormat>
+				<autoVersionSubmodules>true</autoVersionSubmodules>
+				<releaseProfiles>releases</releaseProfiles>
+			</configuration>
+		  </plugin>
 	</build>
+	
+	<profiles>
+		<profile>
+		  <id>releases</id>
+		  <build>
+			 <plugins>
+				
+				<plugin>
+				  <groupId>org.apache.maven.plugins</groupId>
+				  <artifactId>maven-deploy-plugin</artifactId>
+				  <configuration>
+					<skip>true</skip>
+				  </configuration>
+				</plugin>
+				
+				<plugin>
+				   <groupId>org.sonatype.plugins</groupId>
+				   <artifactId>nexus-staging-maven-plugin</artifactId>
+				   <version>1.6.12</version>
+				   <executions>
+					  <execution>
+						 <id>default-deploy</id>
+						 <phase>deploy</phase>
+						 <goals>
+							<goal>deploy</goal>
+						 </goals>
+					  </execution>
+				   </executions>
+				   <configuration>
+					  <serverId>nexus-releases</serverId>
+					  <nexusUrl>${nexus.url}</nexusUrl>
+					  <skipStaging>true</skipStaging>
+				   </configuration>
+				</plugin>
+			 </plugins>
+		  </build>
+		</profile>
+    </profiles>
 
 </project>
