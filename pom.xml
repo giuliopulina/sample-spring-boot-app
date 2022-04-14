@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.sample</groupId>
 	<artifactId>sample-spring-boot-app</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>sample</name>
 	<description>Demo project for Spring Boot</description>
 	
@@ -23,7 +23,7 @@
 	<scm>
 		<connection>scm:git:ssh://git@github.com:giuliopulina/sample-spring-boot-app.git</connection>
 		<developerConnection>scm:git:git@github.com:giuliopulina/sample-spring-boot-app.git</developerConnection>
-		<tag>v0.0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 	
 	<distributionManagement>
